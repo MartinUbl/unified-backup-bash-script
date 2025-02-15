@@ -1,0 +1,6 @@
+config.sh
+.state
+.viminfo
+.ssh
+.bash_history
+.gitconfig
