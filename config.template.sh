@@ -9,6 +9,9 @@ TARGET_USER=backupuser
 # backup directory root - all backups will be stored and versioned here
 TARGET_DIRECTORY_BASE=/opt/backups/server1
 
+# how many backups to keep
+KEEP_BACKUPS=7
+
 # mysql user and password for backups
 MYSQL_USER=backupuser
 MYSQL_PASSWORD="backup password"
@@ -21,7 +24,13 @@ BACKUP_DIRECTORIES="/etc /var/www"
 BACKUP_MYSQL_DATABASES="*"
 
 # which databases to ignore? default: "information_schema performance_schema"
-BACKUP_MYSQL_IGNORE_DATABASES="information_schema performance_schema"
+BACKUP_MYSQL_IGNORE_DATABASES="information_schema performance_schema sys"
+
+# docker containers to backup - space-separated list of containers or empty if not desired
+BACKUP_DOCKER_CONTAINERS="*"
+
+# docker containers to ignore - space-separated list of containers or empty if not desired
+BACKUP_DOCKER_IGNORE_CONTAINERS=""
 
 # notification e-mail for errors
 NOTIFY_EMAIL="webmaster@localhost"
