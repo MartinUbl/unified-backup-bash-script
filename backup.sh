@@ -4,6 +4,29 @@
 # INITIALIZATION															  #
 ###############################################################################
 
+# check if the script is run with an argument
+if [ ! -z "$1" ]; then
+	if [ "$1" == "--autoupdate" ]; then
+		echo "Performing autoupdate of Arcibober"
+		echo "> Downloading the latest version"
+		wget -nv -q https://github.com/MartinUbl/unified-backup-bash-script/raw/refs/heads/main/backup.sh -O .backup.new.sh >/dev/null
+		echo "> Checking the downloaded file"
+		chmod +x .backup.new.sh
+		if [ $(wc -l < .backup.new.sh) -lt 10 ]; then
+			echo "Downloaded file is too short, aborting"
+			exit 1
+		fi
+		mv .backup.new.sh backup.sh
+		echo "Update complete!"
+		exit 0
+	else
+		echo "Unknown argument: $1"
+		echo "Supported parameters:"
+		echo "  --autoupdate - update the script automatically"
+		exit 2
+	fi
+fi
+
 # check the presence of the configuration file
 if [ ! -f "config.sh" ]; then
 	echo "[ERR] No config file found!"
