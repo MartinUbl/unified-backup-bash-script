@@ -12,6 +12,9 @@ TARGET_DIRECTORY_BASE=/opt/backups/server1
 # how many backups to keep
 KEEP_BACKUPS=7
 
+# SSH port on the target server
+TARGET_SSH_PORT=23
+
 # mysql user and password for backups
 MYSQL_USER=backupuser
 MYSQL_PASSWORD="backup password"
@@ -19,7 +22,7 @@ MYSQL_PASSWORD="backup password"
 # directories to backup - space-separated list of directories or empty if not desired
 BACKUP_DIRECTORIES="/etc /var/www"
 
-# which databases to backup? "*" = all databases, "?..." = regex format (e.g., "?(^web|mysql)" for all databases staring with web or named "mysql")
+# which databases to backup? "*" = all databases, "?..." = regex format (e.g., "?(^web|mysql)" for all databases starting with web or named "mysql")
 #                            or list of databases, (e.g., "web1 web2 mysql test")
 BACKUP_MYSQL_DATABASES="*"
 
@@ -42,6 +45,10 @@ NOTIFY_EMAIL="webmaster@localhost"
 DATE_FORMATTER="%F-%H-%M-%S"
 
 TAR_FLAGS="-czf"
+
+SSH_FLAGS="-oBatchMode=yes -p$TARGET_SSH_PORT"
+
+SCP_FLAGS="-P$TARGET_SSH_PORT -B"
 
 MYSQLDUMP_FLAGS="--single-transaction --quick"
 
