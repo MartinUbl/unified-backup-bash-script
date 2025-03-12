@@ -20,3 +20,32 @@ For MySQL backups, create a user designated for backups (prefer localhost-only a
 CREATE USER backup@localhost IDENTIFIED BY 'very_secret_backup_password';
 GRANT SELECT, SHOW VIEW, TRIGGER, LOCK TABLES ON *.* TO backup@localhost;
 ```
+
+### Typical setup sequence
+
+A typical setup sequence may consist of the following commands (starting as `root`):
+
+```
+mkdir -p /opt/arcibober
+useradd -d /opt/arcibober -s /bin/bash arcibober
+chown arcibober:arcibober /opt/arcibober
+apt install mailutils
+su - arcibober
+wget https://github.com/MartinUbl/unified-backup-bash-script/raw/refs/heads/main/backup.sh
+wget https://github.com/MartinUbl/unified-backup-bash-script/raw/refs/heads/main/config.template.sh
+chmod +x backup.sh
+ssh-keygen
+ssh-copy-id -s remoteuser@remoteserver.example.com
+```
+
+## Notes
+
+Everything the Arcibober backs up must be accessible for it. You may use ordinary unix permissions (e.g., read permission, chmod +r), or ACLs.
+
+For example, if you want to back up the `/etc` folder using Arcibober, you may want to run the following set of commands:
+```
+setfacl -Rdm u:arcibober:rx /etc/
+setfacl -Rm u:arcibober:rx /etc/
+```
+
+NOTE: the first command sets the defaults, so all files created in future has the same rule applied. The second command manipulates ACLs of currently existing files
