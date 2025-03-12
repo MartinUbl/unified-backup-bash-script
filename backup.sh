@@ -44,7 +44,8 @@ WARNINGS=()
 
 # terminate script with an error code and send an email
 die_loud() {
-	echo -e "[\e[31mERR\e[0m]$1" >&2
+	TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+	echo -e "$TIMESTAMP [\e[31mERR\e[0m]$1" >&2
 	if [ ! -z "$NOTIFY_EMAIL" ]; then
 		SUBJECT=${EMAIL_ERROR_SUBJECTS[$RANDOM % ${#EMAIL_ERROR_SUBJECTS[@]}]}
 
@@ -58,7 +59,6 @@ die_loud() {
 			fi
 		done
 
-
 		echo -e "[ERR] $1\n$WARNSTRING" | mail -s "[!] $SUBJECT" $NOTIFY_EMAIL
 	fi
 	exit 1
@@ -66,12 +66,14 @@ die_loud() {
 
 # add a warning to the list of warnings
 warn() {
+	TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 	WARNINGS+=("$1")
-	echo -e "[\e[33mWARN\e[0m] $1" >&2
+	echo -e "$TIMESTAMP [\e[33mWARN\e[0m] $1" >&2
 }
 
 info() {
-	echo -e "[\e[32mINFO\e[0m] $1"
+	TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+	echo -e "$TIMESTAMP [\e[32mINFO\e[0m] $1"
 }
 
 # flush warnings to the console and send an email
