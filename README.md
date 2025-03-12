@@ -48,4 +48,4 @@ setfacl -Rdm u:arcibober:rx /etc/
 setfacl -Rm u:arcibober:rx /etc/
 ```
 
-NOTE: the first command sets the defaults, so all files created in future has the same rule applied. The second command manipulates ACLs of currently existing files
+NOTE: the first command sets the defaults, so all files created in future have the same rule applied. The second command manipulates ACLs of currently existing files
